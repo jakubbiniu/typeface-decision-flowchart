@@ -1,0 +1,135 @@
+package com.sample.rules
+
+import com.sample.WindowState;
+import com.sample.DroolsTest;
+import java.util.*;
+
+declare Question
+	questionText: String
+end
+
+declare Answer
+	answerText: String
+end
+
+declare Info
+	info: String
+end
+
+rule "Init"
+	when
+	then
+		insert(new WindowState(""));
+		System.out.println("1-KindOfProject");
+    	insert(new Question("What do you need a typeface for?"));
+end
+
+rule "Question"
+	when
+		$question: Question();
+		$windowState : WindowState(getText() == "");
+	then
+		System.out.println("new Question");
+		$windowState.setText($question.getQuestionText());
+    	update($windowState);
+end
+
+
+rule "1-question"
+	when
+		$question: Question(questionText == "What do you need a typeface for?");
+		$windowState : WindowState();
+	then
+		System.out.println("1-Question");
+    	$windowState.setButtonText1("Book");
+    	$windowState.setButtonText2("Infographic");
+    	$windowState.setButtonText3("Logo");
+    	$windowState.setButtonText4("Newspaper");
+    	//retract($question);
+    	update($windowState);
+end
+
+rule "1-answer"
+	when
+    	$windowState : WindowState(getAnswer() == "Book");
+    	$question: Question(questionText == "What do you need a typeface for?");
+	then
+		retract($question);
+		//System.out.println("1-Answer");
+		//insert(new Answer($windowState.getAnswer()));
+		System.out.println("1-Answered: " + $windowState.getAnswer()); 
+		
+		insert(new Info("user likes books"));
+			
+    	$windowState.setButtonText1("");
+    	$windowState.setButtonText2("");
+    	$windowState.setButtonText3("");
+    	$windowState.setButtonText4("");
+    	$windowState.setAnswer("");
+    	$windowState.setText("");
+    	update($windowState);
+end
+
+
+rule "1-answer-update"
+	when
+    	//$answer : Answer();
+    	$windowState : WindowState();
+    	$info : Info(info=="user likes books");
+	then
+		//retract($answer);
+		insert(new Question("Are you completely in doubt?"));
+		System.out.println("1-answer-update");
+    	update($windowState);
+    	retract($info);
+end
+
+rule "2-question"
+	when
+		$question: Question(questionText == "Are you completely in doubt?");
+		$windowState : WindowState();
+	then
+		System.out.println("2-question");
+    	$windowState.setButtonText1("Yes");
+    	$windowState.setButtonText2("No");
+    	$windowState.setButtonText3("");
+    	$windowState.setButtonText4("");
+    	//retract($question);
+    	update($windowState);
+end
+
+rule "2-Answer"
+	when
+    	$windowState : WindowState(getAnswer() == "Yes");
+    	$question: Question(questionText == "Are you completely in doubt?");
+	then
+		retract($question);
+		//System.out.println("new Answer");
+		//insert(new Answer($windowState.getAnswer()));
+		System.out.println("2-answered: " + $windowState.getAnswer()); 
+		
+		insert(new Info("user is in doubt"));
+			
+    	$windowState.setButtonText1("");
+    	$windowState.setButtonText2("");
+    	$windowState.setButtonText3("");
+    	$windowState.setButtonText4("");
+    	$windowState.setAnswer("");
+    	$windowState.setText("");
+    	update($windowState);
+end
+
+rule "2-answer-update"
+	when
+    	//$answer : Answer();
+    	$windowState : WindowState();
+    	$info : Info(info=="user is in doubt");
+	then
+		//retract($answer);
+		insert(new Question("Caslon"));
+		System.out.println("2-answer-update");
+    	update($windowState);
+    	retract($info);
+end
+
+
