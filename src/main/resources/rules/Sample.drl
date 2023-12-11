@@ -21,12 +21,7 @@ rule "Init"
     	insert(new Question("What do you need a typeface for?","Book","Infographic","Logo","Newspaper",null));
 end
 
-rule "refresh"
-when
-	$windowState : WindowState();
-then
-	update($windowState);
-end
+
 
 rule "answer_handler"
 when
