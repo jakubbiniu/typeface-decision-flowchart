@@ -17,39 +17,33 @@ rule "Init"
     	insert(new Question("What do you need a typeface for?",null));
 end
 
-
-rule "1-question"
-	when
-		$question: Question(questionText == "What do you need a typeface for?", answer == null);
-		$windowState : WindowState(getAnswer() == "");
-	then
-		System.out.println("1-Question");
-		$windowState.setText($question.getQuestionText());
-    	$windowState.setButtonText1("Book");
-    	$windowState.setButtonText2("Infographic");
-    	$windowState.setButtonText3("Logo");
-    	$windowState.setButtonText4("Newspaper");
-    	update($windowState);
-end
-
-rule "1-answer"
+rule "answer_handler"
 when
-	$question: Question(questionText == "What do you need a typeface for?", answer == null);
 	$windowState : WindowState(getAnswer() != "");
+	$question : Question(answer==null);
 then
 	modify($question) {
         setAnswer($windowState.getAnswer())
     	}
-    $windowState.setButtonText1("");
-    $windowState.setButtonText2("");
-    $windowState.setButtonText3("");
-    $windowState.setButtonText4("");
-    $windowState.setAnswer("");
-    $windowState.setText("");
-    update($windowState);
+  	$windowState.setAnswer("");
     update($question);
-    System.out.println("1-answer");
+    update($windowState);
 end
+
+rule "1-question"
+when
+    $question: Question(questionText == "What do you need a typeface for?", answer == null);
+    $windowState : WindowState(getAnswer() == "");
+then
+    System.out.println("1-Question");
+    $windowState.setText($question.getQuestionText());
+    $windowState.setButtonText1("Book");
+    $windowState.setButtonText2("Infographic");
+    $windowState.setButtonText3("Logo");
+    $windowState.setButtonText4("Newspaper");
+	update($windowState);
+end
+
 
 rule "2-question"
 	when
@@ -62,27 +56,11 @@ rule "2-question"
 		$windowState.setText("Are you completely in doubt?");
     	$windowState.setButtonText1("Yes");
     	$windowState.setButtonText2("No");
+    	$windowState.setButtonText3("");
+    	$windowState.setButtonText4("");
     	update($windowState);
 end
 
-rule "2-answer"
-when
-	$question: Question(questionText == "Are you completely in doubt?", answer == null);
-	$windowState : WindowState(getAnswer() != "");
-then
-	modify($question) {
-        setAnswer($windowState.getAnswer())
-    	}
-    $windowState.setButtonText1("");
-    $windowState.setButtonText2("");
-    $windowState.setButtonText3("");
-    $windowState.setButtonText4("");
-    $windowState.setAnswer("");
-    $windowState.setText("");
-    update($windowState);
-    update($question);
-    System.out.println("2-answer");
-end
 
 rule "3-decision"
 	when
@@ -91,11 +69,9 @@ rule "3-decision"
 	then
 		System.out.println("3-decision");
 		$windowState.setText("Perfect typeface for you: Calson");
+		$windowState.setButtonText1("");
+    	$windowState.setButtonText2("");
+    	$windowState.setButtonText3("");
+    	$windowState.setButtonText4("");
     	update($windowState);
 end
-
-
-
-
-
-
