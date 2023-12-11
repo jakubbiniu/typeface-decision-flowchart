@@ -6,6 +6,10 @@ import java.util.*;
 
 declare Question
 	questionText: String
+	a1: String
+	a2: String
+	a3: String
+	a4: String
 	answer: String
 end
 
@@ -14,7 +18,14 @@ rule "Init"
 	then
 		insert(new WindowState(""));
 		System.out.println("init");
-    	insert(new Question("What do you need a typeface for?",null));
+    	insert(new Question("What do you need a typeface for?","Book","Infographic","Logo","Newspaper",null));
+end
+
+rule "refresh"
+when
+	$windowState : WindowState();
+then
+	update($windowState);
 end
 
 rule "answer_handler"
@@ -37,10 +48,10 @@ when
 then
     System.out.println("1-Question");
     $windowState.setText($question.getQuestionText());
-    $windowState.setButtonText1("Book");
-    $windowState.setButtonText2("Infographic");
-    $windowState.setButtonText3("Logo");
-    $windowState.setButtonText4("Newspaper");
+    $windowState.setButtonText1($question.getA1());
+    $windowState.setButtonText2($question.getA2());
+    $windowState.setButtonText3($question.getA3());
+    $windowState.setButtonText4($question.getA4());
 	update($windowState);
 end
 
@@ -52,12 +63,13 @@ rule "2-question"
 		not $question2 : Question(questionText == "Are you completely in doubt?", answer != null);
 	then
 		System.out.println("2-Question");
-		insert(new Question("Are you completely in doubt?",null));
-		$windowState.setText("Are you completely in doubt?");
-    	$windowState.setButtonText1("Yes");
-    	$windowState.setButtonText2("No");
-    	$windowState.setButtonText3("");
-    	$windowState.setButtonText4("");
+		Question $question2 = new Question("Are you completely in doubt?","Yes","No","","",null);
+		insert($question2);
+		$windowState.setText($question2.getQuestionText());
+    	$windowState.setButtonText1($question2.getA1());
+    	$windowState.setButtonText2($question2.getA2());
+    	$windowState.setButtonText3($question2.getA3());
+    	$windowState.setButtonText4($question2.getA4());
     	update($windowState);
 end
 
