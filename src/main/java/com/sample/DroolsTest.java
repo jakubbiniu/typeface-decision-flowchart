@@ -4,6 +4,8 @@ import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
+
 import org.kie.api.KieServices;
 import org.kie.api.runtime.ClassObjectFilter;
 import org.kie.api.runtime.KieContainer;
@@ -11,12 +13,8 @@ import org.kie.api.runtime.KieSession;
 
 
 public class DroolsTest extends JFrame {
-
-    private JButton answerButton1;
-    private JButton answerButton2;
-    private JButton answerButton3;
-    private JButton answerButton4;
-    private JLabel questionLabel;
+	
+    private JLabel questionLabel = new JLabel("");
     private KieSession kieSession;
     
     private WindowState windowState;
@@ -26,12 +24,6 @@ public class DroolsTest extends JFrame {
         setTitle("Choose Your Game");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        answerButton1 = new JButton("");
-        answerButton2 = new JButton("");
-        answerButton3 = new JButton("");
-        answerButton4 = new JButton("");
-        questionLabel = new JLabel("");
 
         Font font = questionLabel.getFont();
         questionLabel.setFont(new Font(font.getName(), Font.PLAIN, 18));
@@ -46,7 +38,6 @@ public class DroolsTest extends JFrame {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         
-        
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -56,44 +47,10 @@ public class DroolsTest extends JFrame {
         questionPanel.add(questionLabel);
         panel.add(questionPanel, gbc);
 
-        
-        gbc.gridy++;
-        panel.add(answerButton1, gbc);
-        gbc.gridy++;
-        panel.add(answerButton2, gbc);
-        gbc.gridy++;
-        panel.add(answerButton3, gbc);
-        gbc.gridy++;
-        panel.add(answerButton4, gbc);
-        add(panel, BorderLayout.CENTER);
-        
         initializeDrools();
-        updateWindowState();
+        updateWindowState(gbc, panel);
         
-        answerButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	clickButton(windowState.getButtonText1());
-            }
-        });
-        answerButton2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	clickButton(windowState.getButtonText2());
-            }
-        });
-        answerButton3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	clickButton(windowState.getButtonText3());
-            }
-        });
-        answerButton4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	clickButton(windowState.getButtonText4());
-            }
-        });
+        add(panel, BorderLayout.CENTER);
     }
 
     private void initializeDrools() {
@@ -103,7 +60,7 @@ public class DroolsTest extends JFrame {
         kieSession.fireAllRules();
     }
     
-    private void updateWindowState() {
+    private void updateWindowState(GridBagConstraints gbc, JPanel panel) {
     	windowState = (WindowState) kieSession.getObjects(new ClassObjectFilter(WindowState.class))
         	    .stream()
         	    .findFirst()
@@ -114,32 +71,40 @@ public class DroolsTest extends JFrame {
         }
         questionLabel.setText("<html>" + result + "</html>");
         
-        String button1Description = (windowState != null) ? windowState.getButtonText1() : "Empty button text";
-        answerButton1.setText(button1Description);
-        if(windowState.getButtonText1().equals(""))
-        	answerButton1.setVisible(false);
+        //clear all buttons
+        Component[] components = panel.getComponents();
+        for (Component component : components) {
+            if (component instanceof JButton) {
+                panel.remove(component);
+            }
+        }
+        panel.revalidate();
+        panel.repaint();
         
-        String button2Description = (windowState != null) ? windowState.getButtonText2() : "Empty button text";
-        answerButton2.setText(button2Description);
-        if(windowState.getButtonText2().equals(""))
-        	answerButton2.setVisible(false);
-        
-        String button3Description = (windowState != null) ? windowState.getButtonText3() : "Empty button text";
-        answerButton3.setText(button3Description);
-        if(windowState.getButtonText3().equals(""))
-        	answerButton3.setVisible(false);
-        
-        String button4Description = (windowState != null) ? windowState.getButtonText4() : "Empty button text";
-        answerButton4.setText(button4Description);
-        if(windowState.getButtonText4().equals(""))
-        	answerButton4.setVisible(false);
+        //render new buttons
+        if(Objects.nonNull(windowState.getPossibleAnswers())) {
+        	gbc.gridy = 1;
+            for(String answer : windowState.getPossibleAnswers()) {
+            	System.out.println(answer);
+            	if(answer == "") continue;
+            	JButton button = new JButton(answer);
+            	gbc.gridy++;
+                panel.add(button, gbc);
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                    	clickButton(answer, gbc, panel);
+                    }
+                });    
+            }
+        }
     }
 
-    private void clickButton(String setAnswerString) {
+    private void clickButton(String setAnswerString, GridBagConstraints gbc, JPanel panel) {
         windowState.setAnswer(setAnswerString);
         kieSession.update(kieSession.getFactHandle(windowState), windowState);
         kieSession.fireAllRules();
-        updateWindowState();
+        updateWindowState(gbc, panel);
     }
 
     public static void main(String[] args) {

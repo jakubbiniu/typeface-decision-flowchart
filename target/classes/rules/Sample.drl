@@ -43,10 +43,11 @@ when
 then
     System.out.println("1-Question");
     $windowState.setText($question.getQuestionText());
-    $windowState.setButtonText1($question.getA1());
-    $windowState.setButtonText2($question.getA2());
-    $windowState.setButtonText3($question.getA3());
-    $windowState.setButtonText4($question.getA4());
+    //$windowState.setButtonText1($question.getA1());
+    //$windowState.setButtonText2($question.getA2());
+    //$windowState.setButtonText3($question.getA3());
+    //$windowState.setButtonText4($question.getA4());
+    $windowState.setPossibleAnswers(new String[]{$question.getA1(), $question.getA2(),$question.getA3(),$question.getA4()});
 	update($windowState);
 end
 
@@ -61,10 +62,11 @@ rule "2-question"
 		Question $question2 = new Question("Are you completely in doubt?","Yes","No","","",null);
 		insert($question2);
 		$windowState.setText($question2.getQuestionText());
-    	$windowState.setButtonText1($question2.getA1());
-    	$windowState.setButtonText2($question2.getA2());
-    	$windowState.setButtonText3($question2.getA3());
-    	$windowState.setButtonText4($question2.getA4());
+    	//$windowState.setButtonText1($question2.getA1());
+    	//$windowState.setButtonText2($question2.getA2());
+    	//$windowState.setButtonText3($question2.getA3());
+    	//$windowState.setButtonText4($question2.getA4());
+    	$windowState.setPossibleAnswers(new String[]{$question2.getA1(), $question2.getA2(),$question2.getA3(),$question2.getA4()});
     	update($windowState);
 end
 
@@ -76,9 +78,10 @@ rule "3-decision"
 	then
 		System.out.println("3-decision");
 		$windowState.setText("Perfect typeface for you: Calson");
-		$windowState.setButtonText1("");
-    	$windowState.setButtonText2("");
-    	$windowState.setButtonText3("");
-    	$windowState.setButtonText4("");
+		$windowState.setPossibleAnswers(new String[]{"","","",""});
+		//$windowState.setButtonText1("");
+    	//$windowState.setButtonText2("");
+    	//$windowState.setButtonText3("");
+    	//$windowState.setButtonText4("");
     	update($windowState);
 end
