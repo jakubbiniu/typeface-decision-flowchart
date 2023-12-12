@@ -21,7 +21,6 @@ rule "init"
 		possibleAnswersList.add("Logo");
 		possibleAnswersList.add("Newspaper");
 		possibleAnswersList.add("Invitation");
-		possibleAnswersList.add("Invitation");
 		insert(new Question("What do you need a typeface for?",possibleAnswersList,null));
 end
  
