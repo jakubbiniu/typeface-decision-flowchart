@@ -21,10 +21,14 @@ rule "init"
 		possibleAnswersList.add("Logo");
 		possibleAnswersList.add("Newspaper");
 		insert(new Question("What do you need a typeface for?",possibleAnswersList,null));
-		question: Question(getAnswer() == null);
-		showQuestion(question);    	
+end
+ 
+rule "show-question-get-answer"
+	when
+		question: Question(getAnswer() == null)
+    then
+    	showQuestion(question);    	
 		update(question);
-		
 end
 
 rule "1-question-book"
@@ -35,9 +39,6 @@ rule "1-question-book"
 		possibleAnswersList.add("Yes");
 		possibleAnswersList.add("No");
 		insert(new Question("Are you completely in doubt?",possibleAnswersList,null));
-		question: Question(getAnswer() == null);
-		showQuestion(question);    	
-		update(question);
 end
 
 rule "1-question-book-decision"
