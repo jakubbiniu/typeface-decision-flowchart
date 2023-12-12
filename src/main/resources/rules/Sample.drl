@@ -1,87 +1,58 @@
-package com.sample.rules
-
-import com.sample.WindowState;
-import com.sample.DroolsTest;
-import java.util.*;
+package com.sample;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 declare Question
-	questionText: String
-	a1: String
-	a2: String
-	a3: String
-	a4: String
-	answer: String
+	questionText : String
+	possibleAnswersList : ArrayList
+	answer : String
 end
 
-rule "Init"
-	when
+declare FinalChoice
+	choice : String
+end
+
+rule "init"
+	when 
 	then
-		insert(new WindowState(""));
-		System.out.println("init");
-    	insert(new Question("What do you need a typeface for?","Book","Infographic","Logo","Newspaper",null));
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Book");
+		possibleAnswersList.add("Infographic");
+		possibleAnswersList.add("Logo");
+		possibleAnswersList.add("Newspaper");
+		insert(new Question("What do you need a typeface for?",possibleAnswersList,null));
 end
-
-
-
-rule "answer_handler"
-when
-	$windowState : WindowState(getAnswer() != "");
-	$question : Question(answer==null);
-then
-	modify($question) {
-        setAnswer($windowState.getAnswer())
-    	}
-  	$windowState.setAnswer("");
-    update($question);
-    update($windowState);
-end
-
-rule "1-question"
-when
-    $question: Question(questionText == "What do you need a typeface for?", answer == null);
-    $windowState : WindowState(getAnswer() == "");
-then
-    System.out.println("1-Question");
-    $windowState.setText($question.getQuestionText());
-    //$windowState.setButtonText1($question.getA1());
-    //$windowState.setButtonText2($question.getA2());
-    //$windowState.setButtonText3($question.getA3());
-    //$windowState.setButtonText4($question.getA4());
-    $windowState.setPossibleAnswers(new String[]{$question.getA1(), $question.getA2(),$question.getA3(),$question.getA4()});
-	update($windowState);
-end
-
-
-rule "2-question"
+ 
+rule "show-question-get-answer"
 	when
-		$question: Question(questionText == "What do you need a typeface for?", answer == "Book");
-		$windowState : WindowState(getAnswer() == "");
-		not $question2 : Question(questionText == "Are you completely in doubt?", answer != null);
-	then
-		System.out.println("2-Question");
-		Question $question2 = new Question("Are you completely in doubt?","Yes","No","","",null);
-		insert($question2);
-		$windowState.setText($question2.getQuestionText());
-    	//$windowState.setButtonText1($question2.getA1());
-    	//$windowState.setButtonText2($question2.getA2());
-    	//$windowState.setButtonText3($question2.getA3());
-    	//$windowState.setButtonText4($question2.getA4());
-    	$windowState.setPossibleAnswers(new String[]{$question2.getA1(), $question2.getA2(),$question2.getA3(),$question2.getA4()});
-    	update($windowState);
+		question: Question(getAnswer() == null)
+    then
+    	showQuestion(question);    	
+		update(question);
 end
 
-
-rule "3-decision"
-	when
-		$question: Question(questionText == "Are you completely in doubt?", answer == "Yes");
-		$windowState : WindowState(getAnswer() == "");
+rule "1-question-book"
+	when 
+		Question(getQuestionText() == "What do you need a typeface for?", getAnswer() == "Book")
 	then
-		System.out.println("3-decision");
-		$windowState.setText("Perfect typeface for you: Calson");
-		$windowState.setPossibleAnswers(new String[]{"","","",""});
-		//$windowState.setButtonText1("");
-    	//$windowState.setButtonText2("");
-    	//$windowState.setButtonText3("");
-    	//$windowState.setButtonText4("");
-    	update($windowState);
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Are you completely in doubt?",possibleAnswersList,null));
 end
+
+rule "1-question-book-decision"
+	when 
+		Question(getQuestionText() == "Are you completely in doubt?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Calson");
+end
+
+function void showQuestion(Question question){
+	question.setAnswer(GuiHandler.showQuestion(question.getQuestionText(), question.getPossibleAnswersList()));
+}
+
+function void showFinalChoice(String choiceText){
+	GuiHandler.showFinalChoice(choiceText);
+}
+
