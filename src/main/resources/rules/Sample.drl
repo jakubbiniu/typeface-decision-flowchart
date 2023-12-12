@@ -32,7 +32,7 @@ rule "show-question-get-answer"
 		update(question);
 end
 
-rule "1-question-book"
+rule "101"
 	when 
 		Question(getQuestionText() == "What do you need a typeface for?", getAnswer() == "Book")
 	then
@@ -42,7 +42,7 @@ rule "1-question-book"
 		insert(new Question("Are you completely in doubt?",possibleAnswersList,null));
 end
 
-rule "1-question-book-decision"
+rule "102"
 	when 
 		Question(getQuestionText() == "Are you completely in doubt?", getAnswer() == "Yes")
 	then
