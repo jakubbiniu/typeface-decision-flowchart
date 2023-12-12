@@ -21,6 +21,7 @@ rule "init"
 		possibleAnswersList.add("Logo");
 		possibleAnswersList.add("Newspaper");
 		possibleAnswersList.add("Invitation");
+		possibleAnswersList.add("Invitation");
 		insert(new Question("What do you need a typeface for?",possibleAnswersList,null));
 end
  
@@ -423,6 +424,414 @@ end
 
 
 
+
+rule "200"
+	when 
+		Question(getQuestionText() == "What do you need a typeface for?", getAnswer() == "Infographic")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("We all like something very condensed, yes?",possibleAnswersList,null));
+end
+
+rule "201"
+	when 
+		Question(getQuestionText() == "We all like something very condensed, yes?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Univers");
+end
+
+rule "202"
+	when 
+		Question(getQuestionText() == "We all like something very condensed, yes?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Got a lot of tables, have you?",possibleAnswersList,null));
+end
+
+rule "203"
+	when 
+		Question(getQuestionText() == "Got a lot of tables, have you?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Letter Gothic");
+end
+
+rule "204"
+	when 
+		Question(getQuestionText() == "Got a lot of tables, have you?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("You cried when watching terminator",possibleAnswersList,null));
+end
+
+rule "205"
+	when 
+		Question(getQuestionText() == "You cried when watching terminator", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: OCR");
+end
+
+rule "206"
+	when 
+		Question(getQuestionText() == "You cried when watching terminator", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		insert(new Question("I must say that this flowchart is looking hot",possibleAnswersList,null));
+end
+
+rule "207"
+	when 
+		Question(getQuestionText() == "I must say that this flowchart is looking hot", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: FF DIN");
+end
+
+rule "300"
+	when 
+		Question(getQuestionText() == "What do you need a typeface for?", getAnswer() == "Newspaper")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Text Face");
+		possibleAnswersList.add("Combination");
+		possibleAnswersList.add("Display");
+		insert(new Question("Choose one:",possibleAnswersList,null));
+end
+
+rule "301"
+	when 
+		Question(getQuestionText() == "Choose one:", getAnswer() == "Text Face")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Do people call you boring from time to time?",possibleAnswersList,null));
+end
+
+rule "302"
+	when 
+		Question(getQuestionText() == "Do people call you boring from time to time?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Times");
+end
+
+rule "303"
+	when 
+		Question(getQuestionText() == "Do people call you boring from time to time?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("How about something heavily used?",possibleAnswersList,null));
+end
+
+rule "304"
+	when 
+		Question(getQuestionText() == "How about something heavily used?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Miller");
+end
+
+rule "305"
+	when 
+		Question(getQuestionText() == "How about something heavily used?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Good");
+		possibleAnswersList.add("Bad");
+		insert(new Question("How about something award winning?",possibleAnswersList,null));
+end
+
+rule "306"
+	when 
+		Question(getQuestionText() == "How about something award winning?", getAnswer() == "Good")
+	then
+		showFinalChoice("Perfect typeface for you: Proforma");
+end
+
+rule "307"
+	when 
+		Question(getQuestionText() == "How about something award winning?", getAnswer() == "Bad")
+	then
+		showFinalChoice("Perfect typeface for you: Arnhem");
+end
+
+rule "308"
+	when 
+		Question(getQuestionText() == "Choose one:", getAnswer() == "Combination")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Think Mr. Spiekermann is mostly right?",possibleAnswersList,null));
+end
+
+rule "309"
+	when 
+		Question(getQuestionText() == "Think Mr. Spiekermann is mostly right?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Arnhem");
+end
+
+rule "310"
+	when 
+		Question(getQuestionText() == "Think Mr. Spiekermann is mostly right?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("The Netherlands is nice, right?",possibleAnswersList,null));
+end
+
+rule "311"
+	when 
+		Question(getQuestionText() == "The Netherlands is nice, right?", getAnswer() == "Yes")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Ok");
+		insert(new Question("Mmm. Spiky serifs are nice",possibleAnswersList,null));
+end
+
+rule "312"
+	when 
+		Question(getQuestionText() == "The Netherlands is nice, right?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Ok");
+		insert(new Question("Get out of my flowchart!",possibleAnswersList,null));
+end
+
+rule "313"
+	when 
+		Question(getQuestionText() == "Get out of my flowchart!", getAnswer() == "Ok")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Ok");
+		insert(new Question("Mmm. Spiky serifs are nice",possibleAnswersList,null));
+end
+
+rule "314"
+	when 
+		Question(getQuestionText() == "Mmm. Spiky serifs are nice", getAnswer() == "Ok")
+	then
+		showFinalChoice("Perfect typeface for you: Swift");
+end
+
+rule "315"
+	when 
+		Question(getQuestionText() == "Choose one:", getAnswer() == "Display")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Do you like it traditional?",possibleAnswersList,null));
+end
+
+rule "316"
+	when 
+		Question(getQuestionText() == "Do you like it traditional?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Something modern, yet plainspoken",possibleAnswersList,null));
+end
+
+rule "317"
+	when 
+		Question(getQuestionText() == "Something modern, yet plainspoken", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Gotham");
+end
+
+rule "318"
+	when 
+		Question(getQuestionText() == "Something modern, yet plainspoken", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Not afraid to be asked if you live in nineties?",possibleAnswersList,null));
+end
+
+rule "319"
+	when 
+		Question(getQuestionText() == "Not afraid to be asked if you live in nineties?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Helvetica");
+end
+
+rule "320"
+	when 
+		Question(getQuestionText() == "Not afraid to be asked if you live in nineties?", getAnswer() == "No")
+	then
+		showFinalChoice("Perfect typeface for you: FF Meta");
+end
+
+rule "321"
+	when 
+		Question(getQuestionText() == "Do you like it traditional?", getAnswer() == "Yes")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("It's okay with you if it's swiss?",possibleAnswersList,null));
+end
+
+rule "322"
+	when 
+		Question(getQuestionText() == "It's okay with you if it's swiss?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Helvetica");
+end
+
+rule "323"
+	when 
+		Question(getQuestionText() == "It's okay with you if it's swiss?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("New");
+		possibleAnswersList.add("Old");
+		insert(new Question("Okay, to a question of age",possibleAnswersList,null));
+end
+
+rule "324"
+	when 
+		Question(getQuestionText() == "Okay, to a question of age", getAnswer() == "New")
+	then
+		showFinalChoice("Perfect typeface for you: Interstate");
+end
+
+rule "325"
+	when 
+		Question(getQuestionText() == "Okay, to a question of age", getAnswer() == "Old")
+	then
+		showFinalChoice("Perfect typeface for you: Franklin Gothic");
+end
+
+rule "500"
+	when 
+		Question(getQuestionText() == "What do you need a typeface for?", getAnswer() == "Invitation")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Like something handwritten, do you?",possibleAnswersList,null));
+end
+
+rule "501"
+	when 
+		Question(getQuestionText() == "Like something handwritten, do you?", getAnswer() == "Yes")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Something calligraphic, maybe?",possibleAnswersList,null));
+end
+
+rule "502"
+	when 
+		Question(getQuestionText() == "Something calligraphic, maybe?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Zapfina");
+end
+
+rule "503"
+	when 
+		Question(getQuestionText() == "Something calligraphic, maybe?", getAnswer() == "No")
+	then
+		showFinalChoice("Perfect typeface for you: FF enkrighthand");
+end
+
+rule "504"
+	when 
+		Question(getQuestionText() == "Like something handwritten, do you?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("How about something a bit fancy?",possibleAnswersList,null));
+end
+
+rule "505"
+	when 
+		Question(getQuestionText() == "How about something a bit fancy?", getAnswer() == "Yes")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Thin hairlines");
+		possibleAnswersList.add("Thinner hairlines");
+		insert(new Question("Choose hairlines:",possibleAnswersList,null));
+end
+
+rule "506"
+	when 
+		Question(getQuestionText() == "Choose hairlines:", getAnswer() == "Thin hairlines")
+	then
+		showFinalChoice("Perfect typeface for you: Bodoni");
+end
+
+rule "507"
+	when 
+		Question(getQuestionText() == "Choose hairlines:", getAnswer() == "Thinner hairlines")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		possibleAnswersList.add("No");
+		insert(new Question("Readability?",possibleAnswersList,null));
+end
+
+rule "508"
+	when 
+		Question(getQuestionText() == "Readability?", getAnswer() == "Yes")
+	then
+		showFinalChoice("Perfect typeface for you: Walbaum");
+end
+
+rule "509"
+	when 
+		Question(getQuestionText() == "Readability?", getAnswer() == "No")
+	then
+		showFinalChoice("Perfect typeface for you: Didot");
+end
+
+rule "510"
+	when 
+		Question(getQuestionText() == "How about something a bit fancy?", getAnswer() == "No")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Ok");
+		insert(new Question("Something fun, then?",possibleAnswersList,null));
+end
+
+rule "511"
+	when 
+		Question(getQuestionText() == "Something fun, then?", getAnswer() == "Ok")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Yes");
+		insert(new Question("Are you alone?",possibleAnswersList,null));
+end
+
+rule "512"
+	when 
+		Question(getQuestionText() == "Are you alone?", getAnswer() == "Yes")
+	then
+		ArrayList<String> possibleAnswersList = new ArrayList<>();
+		possibleAnswersList.add("Ok");
+		insert(new Question("Okay then, come with me",possibleAnswersList,null));
+end
+
+rule "513"
+	when 
+		Question(getQuestionText() == "Okay then, come with me", getAnswer() == "Ok")
+	then
+		showFinalChoice("Perfect typeface for you: Comic Sans");
+end
 
 function void showQuestion(Question question){
 	question.setAnswer(GuiHandler.showQuestion(question.getQuestionText(), question.getPossibleAnswersList()));
